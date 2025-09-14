@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>معرفی — لوازم و تحریر بابا محمود</title>
+
+    <!--
+      توضیح کلی:
+      - این فایل یک صفحه ثابت و بدون اسکرول ایجاد می‌کند.
+      - دایو میانه (profile-container) مطابق مشخصات PSD مرجع 1920×1080 تنظیم شده
+        اما طوری نوشته شده که در اندازه‌های کوچک‌تر (موبایل و تبلت) به‌صورت ریسپانسیو
+        اندازه‌اش به حداقل منطقی نرسد و محتوا داخلش به هم نریزد.
+      - همه بخش‌ها با کامنت فارسی خط‌به‌خط توضیح داده شده‌اند.
+    -->
+
+    <style>
+        /* ================= پایه و فونت ================= */
+        /* فونت‌های وب پایه: اگر فونت‌های اختصاصی دارید @font-face اضافه کنید */
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap');
+
+        :root{
+            /* رنگ‌های گرادینت (قابل تغییر به رنگ‌های دقیق شما) */
+            --g1: #ff79d1;   /* رنگ 1 */
+            --g2: #a7d8ff;   /* رنگ 2 */
+            --g3: #8b5cf6;   /* رنگ 3 */
+
+            /* فونت‌ها: نام اصلی شما و fallback */
+            --font-farsi: "B Traffic", "Vazirmatn", Tahoma, sans-serif;
+            --font-mitra: "2 Mitra_1 (MRT)", "Mitr", Tahoma, sans-serif;
+            --font-himalaya: "Microsoft Himalaya", "Segoe UI", Arial, sans-serif;
+
+            /* اندازهٔ پایه متن — قابل تنظیم */
+            --base-font: 16px;
+        }
+
+        /* ریست پایه */
+        *{box-sizing:border-box;margin:0;padding:0}
+        html,body{height:100%;width:100%;overflow:hidden;direction:rtl}
+        body{
+            font-family: var(--font-farsi);
+            font-size: var(--base-font);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            /* پس‌زمینه: گرادینت سه‌رنگ با زاویه 120deg */
+            background: linear-gradient(120deg, var(--g1) 0%, var(--g2) 50%, var(--g3) 100%);
+            /* جلوگیری از اسکرول (طبق خواسته) */
+            overflow: hidden;
+            /* مرکز کردن محتوای صفحه */
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-height:100vh;
+        }
+
+        /* ================= کانتینر مرجع (stage) ================= */
+        /* این stage فقط برای مرکز کردن و محدود کردن فضای کاری استفاده می‌شود */
+        .stage {
+            /* مهم: stage خودش full-screen نیست، بلکه مرکزی است که profile-container داخل آن قرار می‌گیرد */
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:20px; /* محافظت در لبه‌ها در صفحه‌های خیلی کوچک */
+        }
+
+        /* ================= پروفایل کانتینر (دایو میانه) ================= */
+        /*
+          قواعد طراحی مرجع (برای 1920×1080):
+          - در آن رزولوشن، فاصله از چپ/راست = 685px => کانتینر عرض = 1920 - 2*685 = 550px
+          - فاصله از بالا/پایین = 70px => کانتینر ارتفاع تقریبی = 1080 - 2*70 = 940px
+          برای اینکه در اندازه‌های دیگر ریسپانسیو باشه از clamp و min/max استفاده شده:
+          - عرض کانتینر: بین 280px تا 550px با مقدار ایده‌آل براساس 40vw
+          - ارتفاع کانتینر: حداکثر 940px و حداقل 360px و همچنین محدود به 100vh - 140px
+        */
+        .profile-container{
+            /* پس‌زمینه سفید 40% => شیشه‌ای */
+            background: rgba(255,255,255,0.40);
+            backdrop-filter: blur(6px) saturate(120%);
+            -webkit-backdrop-filter: blur(6px) saturate(120%);
+            border-radius: 52px;           /* رادیوس 52px طبق فتوشاپ */
+            border: 3px solid #000;       /* بوردر مشکی 3px */
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            display:block;
+            flex-direction:column;
+            align-items:center;
+            justify-content:flex-start;
+            padding: 20px;           /* فاصله داخلی */
+            text-align:center;
+            /* اندازهٔ ریسپانسیو: بین 280 و 550 پیکسل، ایده‌آل 40vw */
+            width: clamp(310px, 40vw, 565px);
+            /*max-width: 400px;*/
+            /* ارتفاع: حداقل 360، حداکثر 940 یا فضای عمودی موجود (100vh - 140px) */
+            height: min(940px, calc(100vh - 140px));
+            min-height: 360px;
+            /* تضمین مرکز بودن و جلوگیری از overflow صفحات خیلی کوچک */
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* توضیح:
+           با clamp برای width و min/max برای height، وقتی صفحه افقی کوچک می‌شود،
+           عرض کانتینر به اندازه معقولی (مثلاً 90% تا حدی) تغییر می‌کند اما هرگز
+           از 280px کمتر نمی‌شود — بنابراین محتوا روی موبایل قابل خواندن می‌ماند.
+        */
+
+        /* ================= محتوای داخلی ================= */
+        .inner {
+            width:100%;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:16px; /* فاصله بین المان‌ها */
+            overflow: hidden;
+        }
+
+        /* ---------- لوگوی پروفایل (دایره‌ای 218×218 در فتوشاپ مرجع) ---------- */
+        /*
+          - در رزولوشن بزرگ، اندازهٔ تصویر برابر 218px است.
+          - در صفحه‌های کوچک با clamp اندازه کاهش می‌یابد ولی کمتر از 110px نمی‌شود.
+        */
+        .profile {
+            width: clamp(120px, 18vw, 160px);
+            height: clamp(120px, 18vw, 160px);
+            border-radius: 50%;
+            overflow:hidden;
+            flex:0 0 auto;
+            display:block;
+            border: 4px solid rgba(255,255,255,0.55); /* حاشیه‌ی سفید نیمه شفاف */
+            box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+            background-color: #fff;
+        }
+        .profile img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+        }
+
+        /* لینک عکس را هم پایین کانتینر نمایش می‌دهیم (طبق خواسته) */
+        .img-link {
+            font-size:12px;
+            color:#000;
+            opacity:0.7;
+            margin-top:6px;
+            word-break:break-all;
+        }
+
+        /* ---------- لوگوتایپ اینستاگرام (252×65 در مرجع) ---------- */
+        .insta-type{
+            /*width: clamp(160px, 28vw, 252px);*/
+            height: clamp(40px, 6.5vw, 78px);
+            display:block;
+        }
+        .insta-type img{ width:100%; height:100%; object-fit:contain; display:block; }
+
+        /* ---------- متن دو خطی فارسی (جعبه متن 439×110 در مرجع) ---------- */
+        .title-lines{
+            /*width: min(439px, 100%);*/
+            /* ارتفاع پویا اما فضای لازم برای 2 خط */
+            /*padding:0 6px;*/
+            font-family: var(--font-farsi);
+            /* 12pt در فتوشاپ ≈ 16px در وب */
+            font-size: 30px;
+            line-height: 1.1;
+            color:#000;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+        }
+
+        /* ---------- متن آدرس انگلیسی (@handle) ---------- */
+        .handle {
+            width: min(434px,100%);
+            height: auto;
+            font-family: var(--font-himalaya);
+            direction: ltr;
+            font-size: clamp(8px, 2.8rem, 40px);
+            color: #000;
+            text-align:center;
+        }
+
+        /* ---------- دکمهٔ ورود (آبی 252×65 در مرجع) ---------- */
+        .enter-btn {
+            width: 200px;
+            height: 58px;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            border-radius: 12px; /* رادیوس یکسان — می‌تونیم 52 هم بذاریم ولی 12 منطقی‌تره */
+            background:#2458ff; /* آبی دکمه */
+            color:#fff;
+            text-decoration:none;
+            font-family: var(--font-mitra);
+            font-size: clamp(16px, 1.05rem, 20px);
+            font-weight:600;
+            box-shadow: 0 8px 18px rgba(36,88,255,0.18);
+            border: none;
+            cursor:pointer;
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+        .enter-btn:active{ transform: translateY(1px) }
+
+        /* ---------- دایرهٔ تایمر (190×190 در مرجع) ---------- */
+        .timer-wrap {
+            width: 120px;
+            height: 120px;
+            border-radius:50%;
+            background:#000;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin-top:6px;
+            flex:0 0 auto;
+            position:relative;
+            overflow:hidden;
+        }
+        .timer-text {
+            color:#fff;
+            font-family: var(--font-farsi);
+            font-size: clamp(20px, 2.4rem, 34px);
+            line-height:1;
+            text-align:center;
+            user-select:none;
+            transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .28s;
+        }
+        /* کلاس برای افکت "پایین آمدن" هنگام تغییر عدد */
+        .anim-down { transform: translateY(18%); opacity:0; }
+
+        /* ================= واکنش‌گرایی و نقاط شکست بیشتر ================= */
+        /* وقتی صفحه خیلی باریک است (موبایل‌های کوچک)، padding کانتینر کمتر شود */
+        @media (max-width:420px){
+            .profile-container { padding: 18px 12px; border-radius: 36px; }
+            .title-lines { font-size:14px; }
+            .enter-btn { border-radius:10px; }
+        }
+
+        /* اگر ارتفاع صفحه خیلی کم باشد (مثلاً در بعضی تبلت‌ها یا پنجره‌های کوچک) */
+        @media (max-height:600px){
+            .profile-container{ height: min(740px, calc(100vh - 80px)); }
+            .inner{ gap:12px; }
+        }
+
+        /* ================= دستورات دسترسی (A11y) برای کیبورد و خوانایی ================= */
+        .enter-btn:focus { outline: 3px solid rgba(36,88,255,0.25); outline-offset:4px; }
+
+    </style>
+</head>
+<body>
+<!-- =============== Stage مرکزی =============== -->
+<div class="stage" role="main" aria-label="صفحه معرفی اینستاگرام بابا محمود">
+    <!-- =============== دایو میانه: profile-container =============== -->
+    <section class="profile-container" id="profileContainer" aria-labelledby="profileTitle">
+        <!-- محتوای داخلی -->
+        <div class="inner">
+            <!-- لوگوی پروفایل: تصویر اصلی 1328×1328 (لینک ذکر شده) -->
+            <figure class="profile" aria-hidden="false" title="لوگوی پروفایل اینستاگرام">
+                <img src="https://i.postimg.cc/y8hbBrrX/profilephoto.png" alt="پروفایل بابا محمود — تصویر پروفایل">
+            </figure>
+
+            <!-- لوگوتایپ اینستاگرام به صورت تصویر مستطیلی -->
+            <div class="insta-type" aria-hidden="false">
+                <img src="https://i.postimg.cc/DZV0s6TZ/instagram-type-color.png" alt="Instagram type">
+            </div>
+
+            <!-- متن دو خطی فارسی (وسط چین) -->
+            <div class="title-lines" id="profileTitle" aria-hidden="false">
+                <div>صفحه اینستاگرام</div>
+                <div>لوازم و تحریر بابا محمود</div>
+            </div>
+
+            <!-- آدرس پیج به زبان انگلیسی -->
+            <div class="handle" aria-hidden="false">@babamahmoudshop</div>
+
+            <!-- دکمه ورود به صفحه (لینک به اینستاگرام) -->
+            <a class="enter-btn" id="enterBtn" href="https://www.instagram.com/babamahmoudshop/" target="_blank" rel="noopener noreferrer" role="button">
+                ورود به صفحه
+            </a>
+
+            <!-- دایرهٔ تایمر 4 ثانیه‌ای -->
+            <div class="timer-wrap" aria-live="polite" aria-atomic="true" title="ثانیه‌شمار">
+                <div id="timerText" class="timer-text">4</div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<!-- =============== اسکریپت: تایمر، ریدایرکت و انطباق رفتار =============== -->
+<script>
+    /*
+      توضیح:
+      - تایمر از 5 شروع می‌کند و هر ثانیه کم می‌شود.
+      - با هر تغییر عدد یک افکت کوچک "پایین آمدن" اعمال می‌شود.
+      - در پایان (پس از نمایش 0) کاربر فوراً به لینک اینستاگرام هدایت می‌شود.
+      - دکمه ورود هم لینک دارد تا کاربر زودتر برود (در تب جدید باز می‌شود).
+    */
+
+    (function(){
+        const TARGET = "https://www.instagram.com/babamahmoudshop/";
+        const timerText = document.getElementById('timerText');
+        const enterBtn = document.getElementById('enterBtn');
+        let count = 5;                // مقدار اولیه
+        let intervalId = null;
+
+        // نمایش مقدار فعلی با افکت
+        function renderNumber(n){
+            // برای افکت: ابتدا کلاس انیم را اضافه کن تا به پایین برود (محو شود)
+            timerText.classList.add('anim-down');
+            // پس از مدت کوتاهی مقدار را عوض کن و کلاس را بردار تا عدد جدید ظاهر شود
+            setTimeout(()=> {
+                timerText.textContent = String(n);
+                timerText.classList.remove('anim-down');
+            }, 260); // زمان هماهنگ با transition در CSS
+        }
+
+        // شروع شمارش
+        function startCountdown(){
+            renderNumber(count);
+            intervalId = setInterval(()=> {
+                count--;
+                if (count >= 0) {
+                    renderNumber(count);
+                }
+                if (count <= 0) {
+                    clearInterval(intervalId);
+                    // ریدایرکت فوری به آدرس (در همان تب)
+                    window.location.href = TARGET;
+                }
+            }, 1000);
+        }
+
+        // شروع خودکار بلافاصله پس از لود صفحه (کوچکی تا اطمینان از رندر)
+        window.addEventListener('load', function(){
+            setTimeout(startCountdown, 300);
+        });
+
+        // اگر کاربر دکمه "ورود" را کلیک کرد — اجازه می‌دهیم لینک طبق معمول باز شود (تب جدید)
+        enterBtn.addEventListener('click', function(e){
+            // این listener فقط برای پایداری اضافه شده؛ رفتار اصلی href حفظ می‌شود.
+        });
+
+        // پیش‌بینی رفتار در شرایطی که صفحه بسیار کوچک باشد:
+        // با استفاده از CSS clamp/min-height کنترل شده است؛ اگر نیاز به توقف شمارش روی موبایل خواستی می‌تونم اضافه کنم.
+    })();
+</script>
+</body>
+</html>
